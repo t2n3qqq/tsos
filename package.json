@@ -1,0 +1,29 @@
+{
+  "name": "education_react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "app-module-path": "^2.1.0",
+    "path": "^0.12.7",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "restify": "^4.2.0",
+    "serve-static-restify": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel": {
+      "presets": [
+        "es2015",
+        "stage-0",
+        "react"
+      ]
+    },
+    "babel-preset-stage-0": "^6.16.0"
+  }
+}
