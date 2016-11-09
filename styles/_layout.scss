@@ -1,0 +1,38 @@
+body {
+  font-family: $font-stack;
+  font-weight: lighter;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4 {
+  font-weight: lighter;
+}
+
+.header__name {
+  text-align: center;
+  margin-bottom: 2*$measure-indent;
+}
+
+input[type="text"] {
+  padding: .3*$measure-indent .6*$measure-indent;
+}
+
+.main__selector-file {
+  background-color: $color-white;
+  color: $color-black;
+  border: 1px solid $color-black;
+  border-radius: 3px;
+  padding: .5*$measure-indent;
+  margin-left: 2*$measure-indent;
+
+  &:hover {
+    background-color: darken($color-white, 2%);
+  }
+}
+
+.main__selector-sorting {
+  display: block;
+  padding: .5*$measure-indent;
+  background-color: $color-white;
+}

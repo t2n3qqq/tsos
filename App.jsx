@@ -70,11 +70,14 @@ class App extends React.Component {
 
   render() {
     const checkboxTypeSorted = this.state.isSelectedFile ? (
-      <select onChange={this.changeTypeSorting}>
-        <option value="none">None</option>
-        <option value="isValueSorting">Sorted by frequency word</option>
-        <option value="isAlphabetSorting">Sorted by alphabet word</option>
-      </select>
+      <div>
+        <h2>Enter type of sorting:</h2>
+        <select className="main__selector-sorting" onChange={this.changeTypeSorting}>
+          <option value="none">None</option>
+          <option value="isValueSorting">Sorted by frequency word</option>
+          <option value="isAlphabetSorting">Sorted by alphabet word</option>
+        </select>
+      </div>
     ) : null;
 
     const tableList = (this.state.isValueSorting || this.state.isAlphabetSorting)
@@ -92,7 +95,7 @@ class App extends React.Component {
         <input type="text"
           onChange={this.updateFileName}
           value={this.state.file} />
-        <input type="button" onClick={this.getSortedArrays} value="Select file" />
+        <input className="main__selector-file" type="button" onClick={this.getSortedArrays} value="Select file" />
         {checkboxTypeSorted}
         {tableList}
       </div>

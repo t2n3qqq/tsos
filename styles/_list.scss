@@ -1,0 +1,24 @@
+.list-table {
+  border-collapse: collapse;
+  margin: 3*$measure-indent auto;
+  width: 40%;
+  border: 1px solid $color-gray;
+  padding: 2*$measure-indent;
+}
+
+td, th {
+  border: 1px solid $color-gray;
+  padding: .3*$measure-indent;
+}
+
+.list__button_remove {
+  background-color: $color-white;
+  border: 1px solid $color-black;
+  &:hover {
+    font-weight: bold;
+  }
+}
+
+.list__actions {
+  text-align: center;
+}

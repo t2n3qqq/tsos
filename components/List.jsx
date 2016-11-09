@@ -14,8 +14,8 @@ class List extends React.Component {
       <tr key={pair[0]}>
         <td>{pair[0]}</td>
         <td>{pair[1]}</td>
-        <td>
-          <input type="button" onClick={this.props.removeWord} value="X"/>
+        <td className="list__actions">
+          <input className="list__button_remove" type="button" onClick={this.props.removeWord} value="X"/>
         </td>
       </tr>
       )) : null;
@@ -24,15 +24,15 @@ class List extends React.Component {
       <tr key={pair[0]}>
         <td>{pair[0]}</td>
         <td>{pair[1]}</td>
-        <td>
-          <input type="button" onClick={this.props.removeWord} value="X"/>
+        <td className="list__actions">
+          <input className="list__button_remove" type="button" onClick={this.props.removeWord} value="X"/>
         </td>
       </tr>
         )) : null;
 
     return (
       <div>
-        <table>
+        <table className="list-table">
           <thead>
             <tr>
               <th>Word</th>
