@@ -1,8 +1,8 @@
 module.exports = {
   entry: './main.js',
   output: {
-    path: './',
-    filename: 'index.js'
+    path: `${__dirname}/build`,
+    filename: 'bundle.js'
   },
   devServer: {
     inline: true,
@@ -24,5 +24,5 @@ module.exports = {
     root: './',
     extensions: ['', '.jsx', '.js'],
     modulesDirectories: ['./', 'node_modules'],
-  },
+  }
 }
