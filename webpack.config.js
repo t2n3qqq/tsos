@@ -2,7 +2,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const webpack = require('webpack');
-
+const path = require('path');
 module.exports = {
   entry: './main.js',
   output: {
@@ -47,5 +47,8 @@ module.exports = {
     root: './',
     extensions: ['', '.jsx', '.js'],
     modulesDirectories: ['./', 'node_modules'],
-  }
+  },
+  resolveLoader: {
+    root: path.join(__dirname, 'node_modules')
+  },
 }

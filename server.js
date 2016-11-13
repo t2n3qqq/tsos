@@ -3,6 +3,8 @@ const serveStatic = require('serve-static-restify');
 const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
+const pos = require('pos');
+const tagger = new pos.Tagger();
 
 const server = restify.createServer();
 
@@ -36,13 +38,17 @@ server.get('/book/:name', (req, res, next) => {
 
   let valueSortedWords = [];
   for (let key in dictionary) {
-    valueSortedWords.push([key, dictionary[key]]);
+    let [taggedWord] = tagger.tag([key]);
+    const tag = taggedWord[1];
+    valueSortedWords.push([key, dictionary[key], tag]);
   }
   valueSortedWords.sort((a, b) => b[1] - a[1]);
 
   let alphabetSortedWords = [];
   for (let key in dictionary) {
-    alphabetSortedWords.push([key, dictionary[key]]);
+    let [taggedWord] = tagger.tag([key]);
+    const tag = taggedWord[1];
+    alphabetSortedWords.push([key, dictionary[key], tag]);
   }
   alphabetSortedWords.sort((a, b) => a[0] > b[0] ? 1 : -1 );
 

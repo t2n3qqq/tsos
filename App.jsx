@@ -59,13 +59,11 @@ class App extends React.Component {
     }
   }
 
-  removeWord() {
-    // const word = ReactDOM.findDOMNode(this.refs.word).value;
-    // console.log(word);
-    // this.setState({
-    //   valueSortedWords: this.state.valueSortedWords.filter(pair => pair[0] !== word),
-    //   alphabetSortedWords: this.state.alphabetSortedWords.filter(pair => pair[0] !== word),
-    // })
+  removeWord(word) {
+    this.setState({
+      valueSortedWords: this.state.valueSortedWords.filter(pair => pair[0] !== word),
+      alphabetSortedWords: this.state.alphabetSortedWords.filter(pair => pair[0] !== word),
+    })
   }
 
   render() {
