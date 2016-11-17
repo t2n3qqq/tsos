@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
+import HighChart from 'react-highcharts';
 import List from 'components/List';
+
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       file: '',
+      fileData: null,
       valueSortedWords: [],
       alphabetSortedWords: [],
       isSelectedFile: false,
@@ -19,25 +21,50 @@ class App extends React.Component {
     this.changeTypeSorting = this.changeTypeSorting.bind(this);
     this.removeWord = this.removeWord.bind(this);
   }
+
   updateFileName(e) {
     this.setState({
       file: e.target.value,
     });
   }
 
-  getSortedArrays() {
-    $.get(`/book/${this.state.file}`, (data, status) => {
-      if (status === 'success') {
-        const [valueSortedWords, alphabetSortedWords] = data;
+  getFileData() {
+    fetch(`/file/${this.state.file}`, {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log('DATA', data);
         this.setState({
-          valueSortedWords,
-          alphabetSortedWords,
-          isSelectedFile: true,
-        });
-      } else {
-        console.err('Bad request!');
-      }
-    });
+          ...this.state,
+          fileData: data,
+        })
+      })
+      .catch(error => {
+        console.log('GET request `/book/${this.state.file}` faild', error);
+      });
+  }
+
+  getSortedArrays() {
+    fetch(`/book/${this.state.file}`, {
+      method: 'GET',
+    })
+      .then(res => [res.json(), res])
+      .then(([data, res]) => {
+        if (res.status === 'success') {
+          const [valueSortedWords, alphabetSortedWords] = data;
+          this.setState({
+            valueSortedWords,
+            alphabetSortedWords,
+            isSelectedFile: true,
+          });
+        } else {
+          throw new Error('Bad request!');
+        }
+      })
+      .catch(error => {
+        console.error('GET request `/book/${this.state.file}` faild', error);
+      });
   }
 
   changeTypeSorting(e) {
@@ -93,9 +120,35 @@ class App extends React.Component {
         <input type="text"
           onChange={this.updateFileName}
           value={this.state.file} />
-        <input className="main__selector-file" type="button" onClick={this.getSortedArrays} value="Select file" />
-        {checkboxTypeSorted}
-        {tableList}
+        <input
+          className="main__selector-file"
+          type="button"
+          onClick={() => this.getFileData()}
+          value="Select bin file"
+        />
+        <input
+          className="main__selector-file"
+          type="button"
+          onClick={this.getSortedArrays}
+          value="Select file"
+        />
+      {
+        this.state.fileData ?
+          (<HighChart
+            config={{
+              xAxis: {
+                categories: this.state.fileData.values.map((item, index) => {
+                  return this.state.fileData.dataBlockReceiveTime * (index + 1);
+                }),
+              },
+              series: [{
+                data: this.state.fileData.values,
+              }]
+            }}
+            ref="chart"></HighChart>) :
+          null
+      }
+
       </div>
     );
   }

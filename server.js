@@ -5,6 +5,7 @@ const path = require('path');
 const _ = require('lodash');
 const pos = require('pos');
 const tagger = new pos.Tagger();
+const jParser = require('jParser');
 
 const server = restify.createServer();
 
@@ -17,6 +18,43 @@ server.get('/', restify.serveStatic({
   directory: './',
   file: 'index.html',
 }));
+
+server.get('/file/:name', (req, res, next) => {
+
+// ./data/F1.DXT
+// ./data/P6_Gor/ch1.bin
+  fs.readFile(path.join(__dirname, `files/${req.params.name}`), (err, data) => {
+    if (err) {
+      throw err;
+    }
+    console.log(data);
+    console.log(data.length);
+    console.log(data.offset);
+    const parser = new jParser(data, {
+      magic: {
+        fileName: ['string', 4],
+        chanelsNumber: 'int32',
+        chanelPonts: 'int32',
+        spectralLines: 'int32',
+        sliceFrequency: 'int32',
+        frequencyResolution: 'float32',
+        dataBlockReceiveTime: 'float32',
+        totalReceiveTiem: 'int32',
+        receivedBlocksNumberUser: 'int32',
+        dataSize: 'int32',
+        receivedBlocksNumberSystem: 'int32',
+        max: 'float32',
+        min: 'float32',
+        values: ['array', 'float32', (data.length - 52)/4]
+      }
+    });
+    // console.log(parser.parse('magic'));
+    // const fileText = JSON.stringify(parser.parse('magic'));
+    res.send(200, parser.parse('magic'));
+    // return parser.parse('magic');
+    return next();
+  });
+});
 
 server.get('/book/:name', (req, res, next) => {
   const textFromFile = fs.readFileSync(path.join(__dirname, `books/${req.params.name}`)).toString();
