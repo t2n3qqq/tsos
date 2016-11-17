@@ -4,6 +4,7 @@ import HighChart from 'react-highcharts';
 import List from 'components/List';
 
 
+
 class App extends React.Component {
   constructor() {
     super();
@@ -134,18 +135,72 @@ class App extends React.Component {
         />
       {
         this.state.fileData ?
-          (<HighChart
-            config={{
-              xAxis: {
-                categories: this.state.fileData.values.map((item, index) => {
-                  return this.state.fileData.dataBlockReceiveTime * (index + 1);
-                }),
-              },
-              series: [{
-                data: this.state.fileData.values,
-              }]
-            }}
-            ref="chart"></HighChart>) :
+          (
+            <div
+              style={{ height: '400px', width: '1000px' }}
+            >
+            <div
+              style={{ height: '400px', width: '160000px' }}
+            >
+              <HighChart
+              style={{ height: '400px', width: '160000px' }}
+              config={{
+                chart: {
+                  type: 'line',
+                  zoomType: 'x',
+                },
+                xAxis: {
+                  categories: this.state.fileData.values.map((item, index) => {
+                    return this.state.fileData.dataBlockReceiveTime * (index + 1);
+                  }),
+                  min: 0,
+                  scrollbar: {
+                    enabled: true
+                  },
+                },
+                series: [{
+                  data: this.state.fileData.values,
+                }],
+                tooltip: {
+                  useHTML: true,
+                  headerFormat: '<small>{point.key}</small><table>',
+                  pointFormat: '<tr><td style="color: {series.color}">{series.name}:{point.y} </td>',
+                  footerFormat: '</table>',
+                  valueDecimals: 2,
+                  crosshairs: [{
+                    width: 1,
+                    color: 'Gray'
+                  }, {
+                    width: 1,
+                    color: 'gray'
+                  }],
+                },
+                plotOptions: {
+                  column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0.5
+                  },
+                },
+                scrollbar: {
+                  enabled: true,
+                  barBackgroundColor: 'gray',
+                  barBorderRadius: 7,
+                  barBorderWidth: 0,
+                  buttonBackgroundColor: 'gray',
+                  buttonBorderWidth: 0,
+                  buttonArrowColor: 'yellow',
+                  buttonBorderRadius: 7,
+                  rifleColor: 'yellow',
+                  trackBackgroundColor: 'white',
+                  trackBorderWidth: 1,
+                  trackBorderColor: 'silver',
+                  trackBorderRadius: 7
+                }
+              }}
+              ref="chart" />
+            </div>
+            </div>
+          ) :
           null
       }
 
@@ -155,3 +210,67 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+/*
+<HighChart
+style={{ height: '400px', width: '600px' }}
+config={{
+
+}}
+ref="chart" />
+
+
+chart: {
+  type: 'line',
+  zoomType: 'x',
+},
+xAxis: {
+  categories: this.state.fileData.values.map((item, index) => {
+    return this.state.fileData.dataBlockReceiveTime * (index + 1);
+  }),
+  min: 0,
+  max: 10,
+  scrollbar: {
+    enabled: true
+  },
+},
+series: [{
+  data: this.state.fileData.values,
+}],
+tooltip: {
+  useHTML: true,
+  headerFormat: '<small>{point.key}</small><table>',
+  pointFormat: '<tr><td style="color: {series.color}">{series.name}:{point.y} </td>',
+  footerFormat: '</table>',
+  valueDecimals: 2,
+  crosshairs: [{
+    width: 1,
+    color: 'Gray'
+  }, {
+    width: 1,
+    color: 'gray'
+  }],
+},
+plotOptions: {
+  column: {
+    pointPadding: 0.2,
+    borderWidth: 0.5
+  },
+},
+scrollbar: {
+  enabled: true,
+  barBackgroundColor: 'gray',
+  barBorderRadius: 7,
+  barBorderWidth: 0,
+  buttonBackgroundColor: 'gray',
+  buttonBorderWidth: 0,
+  buttonArrowColor: 'yellow',
+  buttonBorderRadius: 7,
+  rifleColor: 'yellow',
+  trackBackgroundColor: 'white',
+  trackBorderWidth: 1,
+  trackBorderColor: 'silver',
+  trackBorderRadius: 7
+}
+*/

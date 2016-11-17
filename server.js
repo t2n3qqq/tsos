@@ -5,7 +5,7 @@ const path = require('path');
 const _ = require('lodash');
 const pos = require('pos');
 const tagger = new pos.Tagger();
-const jParser = require('jParser');
+const jParser = require('./jparser.js');
 
 const server = restify.createServer();
 
@@ -99,7 +99,7 @@ server.get('/book/:name', (req, res, next) => {
   return next();
 })
 
-server.pre(serveStatic(__dirname));
+server.pre(serveStatic(path.join(__dirname, 'client')));
 server.listen(3005,
   () => console.log(`${server.name} listening at ${server.url}`)
 );
